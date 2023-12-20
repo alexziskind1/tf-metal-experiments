@@ -6,8 +6,28 @@ args = parser.parse_args()
 
 import os
 import time
+import platform
+import subprocess
 from tqdm import tqdm
 import tensorflow as tf
+
+
+def get_mac_processor_name():
+    try:
+        result = subprocess.run(['sysctl', '-n', 'machdep.cpu.brand_string'], capture_output=True, text=True)
+        if result.returncode == 0:
+            return result.stdout.strip().replace(" ", "_")
+        else:
+            return "unknown_processor"
+    except Exception as e:
+        print(f"Error getting processor name: {e}")
+        return "unknown_processor"
+
+# Determine the processor name based on the platform
+if platform.system() == 'Darwin':
+    processor_name = get_mac_processor_name()
+else:
+    processor_name = platform.processor().replace(" ", "_")
 
 @tf.function(experimental_autograph_options=tf.autograph.experimental.Feature.ALL)
 def do_op(a, b, num_matmul=10):
@@ -75,4 +95,4 @@ plt.axvline(max_tflop_M, color="k", linestyle="--", linewidth=1, label="M="+str(
 plt.xlabel("Matrix size M*M")
 plt.ylabel("Achieved TFLOPS")
 plt.legend()
-plt.savefig("gpu_tflops_plot.jpg")
+plt.savefig(f"gpu_tflops_plot_{processor_name.lower()}.jpg")
