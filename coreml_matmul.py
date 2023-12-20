@@ -82,4 +82,4 @@ fps = batch_size*num_matmul*iterations/duration
 tops = (fps * 2 * D**3) / 1e12
 
 print("tops", tops)
-
+print("fps", fps)
