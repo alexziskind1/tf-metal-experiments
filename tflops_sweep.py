@@ -79,6 +79,13 @@ print("\nFinished in", int(burn_end-burn_start), "seconds\n")
 max_tflop = max(fp32_tflops)
 max_tflop_M = M_list[fp32_tflops.index(max_tflop)]
     
+title = "All TFLOPS values"
+print("")
+print(title)
+print("="*len(title))
+print(fp32_tflops)
+print("")
+
 title = "Max TFLOPS achieved"
 print("")
 print(title)
