@@ -50,7 +50,7 @@ mlmodel = ct.convert(model,
                      convert_to="mlprogram",
                      inputs=[ct.TensorType(shape=(batch_size,D,D))],
                      compute_precision=ct.precision.FLOAT16,
-                     compute_units=ct.ComputeUnit.ALL)
+                     compute_units=ct.ComputeUnit.CPU_AND_NE)
 
 #mlmodel = quantization_utils.quantize_weights(mlmodel, 16)
                              
@@ -68,7 +68,7 @@ print("Benchmarking model")
 
 ane_out = mlmodel.predict(random_input)
 
-iterations = 30
+iterations = 3000
 
 st = time.time()
 for i in range(iterations):

@@ -34,7 +34,7 @@ mlmodel = ct.convert(model,
                      convert_to="mlprogram",
                      inputs=[ct.TensorType(shape=input_size)],
                      compute_precision=ct.precision.FLOAT16,
-                     compute_units=ct.ComputeUnit.CPU_AND_GPU)
+                     compute_units=ct.ComputeUnit.CPU_AND_NE)
 
 random_input = {"input_2": np.asarray(sample_input).astype(float)}
 
@@ -44,7 +44,7 @@ ane_out = mlmodel.predict(random_input)
 
 ane_out = mlmodel.predict(random_input)
 
-iterations = 100
+iterations = 10000
 
 st = time.time()
 for i in range(iterations):
